@@ -18,16 +18,12 @@ const GREY = {
 };
 
 const PRIMARY = {
-  main: '#7BD88A',
+  main: '#55DB82',
   contrastText: '#fff',
 };
 
 const SECONDARY = {
-  lighter: '#C8FACD',
-  light: '#5BE584',
-  main: '#00AB55',
-  dark: '#007B55',
-  darker: '#005249',
+  main: '#EE7D79',
   contrastText: '#fff',
 };
 
@@ -93,11 +89,15 @@ export default function palette(themeMode) {
     ...COMMON,
     mode: 'light',
     text: {
-      primary: GREY[800],
+      primary: GREY[700],
       secondary: GREY[600],
       disabled: GREY[500],
     },
-    background: { default: '#F9FAFB', paper: '#fff', neutral: GREY[200] },
+    background: {
+      default: '#FAFAFA',
+      paper: '#fff',
+      neutral: GREY[200],
+    },
     action: {
       ...COMMON.action,
       active: GREY[600],
@@ -113,8 +113,8 @@ export default function palette(themeMode) {
       disabled: GREY[600],
     },
     background: {
-      default: '#1F2937',
-      paper: '#374251',
+      default: '#161817',
+      paper: '#242625',
       neutral: alpha(GREY[500], 0.16),
     },
     action: {
