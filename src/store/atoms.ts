@@ -1,8 +1,9 @@
 import { atom } from 'recoil';
+import { IStore } from '../types';
 
-export const isLoginState = atom({
-  key: 'isLogin',
-  default: false,
+export const storeState = atom<IStore | null>({
+  key: 'store',
+  default: null,
 });
 
 export const themeModeState = atom<'light' | 'dark'>({

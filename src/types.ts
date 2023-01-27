@@ -23,3 +23,15 @@ export interface IUser {
   point: number;
   totalPoint: number;
 }
+
+export interface IStore {
+  id: number;
+  loginID: string;
+  password: string;
+  category: string;
+  name: string;
+  image: string;
+  latitude: number;
+  longitude: number;
+  totalPoint: number;
+}

@@ -9,16 +9,18 @@ import {
   Avatar,
   Tooltip,
   MenuItem,
+  Divider,
 } from '@mui/material';
 import { useState } from 'react';
 import ThemeModeToggle from './ThemeModeToggle';
 import logo from '../../assets/logo.png';
 import logo_text from '../../assets/logo_text.svg';
 import { useNavigate } from 'react-router-dom';
-
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+import { useRecoilState } from 'recoil';
+import { storeState } from '../../store/atoms';
 
 function Header() {
+  const [store, setStore] = useRecoilState(storeState);
   const navigate = useNavigate();
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -56,35 +58,54 @@ function Header() {
             onClick={() => navigate('/')}
           />
           <Box sx={{ flexGrow: 1 }} />
-          <Box>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: '45px' }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
+          {store && (
+            <Box>
+              <Tooltip title={store.name}>
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                  <Avatar alt={store.name} src={store.image} />
+                </IconButton>
+              </Tooltip>
+              <Menu
+                sx={{ mt: '45px' }}
+                id="menu-appbar"
+                anchorEl={anchorElUser}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={Boolean(anchorElUser)}
+                onClose={handleCloseUserMenu}
+              >
+                <MenuItem disableTouchRipple disableRipple>
+                  <Typography textAlign="center">{store.name} 사장님, 반갑습니다 👋</Typography>
                 </MenuItem>
-              ))}
-            </Menu>
-          </Box>
+                <Divider />
+                <MenuItem
+                  onClick={() => {
+                    navigate('/menu');
+                    handleCloseUserMenu();
+                  }}
+                >
+                  <Typography textAlign="center">메뉴 관리</Typography>
+                </MenuItem>
+                <MenuItem
+                  onClick={() => {
+                    if (window.confirm('로그아웃 하시겠습니까?')) {
+                      setStore(null);
+                    }
+                    handleCloseUserMenu();
+                  }}
+                >
+                  <Typography textAlign="center">로그아웃</Typography>
+                </MenuItem>
+              </Menu>
+            </Box>
+          )}
           <Box sx={{ width: 8 }} />
           <ThemeModeToggle />
         </Toolbar>
