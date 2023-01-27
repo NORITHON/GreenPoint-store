@@ -1,10 +1,13 @@
+import { SnackbarProvider } from 'notistack';
 import Router from './Router';
 import ThemeProvider from './theme';
 
 function App() {
   return (
     <ThemeProvider>
-      <Router />
+      <SnackbarProvider maxSnack={3}>
+        <Router />
+      </SnackbarProvider>
     </ThemeProvider>
   );
 }

@@ -177,7 +177,6 @@ function Main() {
   };
 
   const getTotalPrice = () => {
-    console.log('render');
     let result = 0;
     selectMenuList.forEach((item, index) => {
       result += item.price * count[index];
@@ -247,7 +246,7 @@ function Main() {
               gutterBottom
             >
               <span>총:</span>
-              <span>{totalPrice}원</span>
+              <span>{totalPrice.toLocaleString('ko-KR')}원</span>
             </Typography>
             <OrderModal price={totalPrice} />
           </Box>
