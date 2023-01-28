@@ -12,133 +12,14 @@ import {
   styled,
   Typography,
 } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { IMenu } from '../../types';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import DeleteIcon from '@mui/icons-material/Delete';
 import OrderModal from './OrderModal';
-
-const menus = [
-  {
-    id: 0,
-    image:
-      'https://search.pstatic.net/common/?autoRotate=true&quality=95&src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20220426_184%2F1650960521204tT4oq_JPEG%2F314Yul1Ov1PVpPxJRXPrONERyJok9pYZPq7-BJdkXLE%253D.jpg',
-    price: 4000,
-    name: '아메리카노',
-  },
-  {
-    id: 1,
-    image:
-      'https://search.pstatic.net/common/?autoRotate=true&quality=95&src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20220107_26%2F1641531835060Lfau0_JPEG%2FatROYaw78yEMZTNhKzI2MwKnAANqx7Xp-p2yg4-Ysc0YH7O0tosWn9k5ETCIojqWYXn_FJI5XsiZ5wqG.jpg',
-    price: 4500,
-    name: '카페라떼',
-  },
-  {
-    id: 2,
-    image:
-      'https://search.pstatic.net/common/?autoRotate=true&quality=95&src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20220112_138%2F1641967956734Vtbi0_JPEG%2FDzjdUrkWY272WObu_ANDXE9gfmDCFksmEOS5wNIg7uB4976jgJQA9FGf6XwwGtK1nYUDZ9JBKecMEIp_.jpg',
-    price: 4500,
-    name: '바닐라라떼',
-  },
-  {
-    id: 3,
-    image:
-      'https://search.pstatic.net/common/?autoRotate=true&quality=95&src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20220111_14%2F1641882555324XvtES_JPEG%2FpI9nwm4yYkcmuQArqPC4l5gXKsSURL1DoQLjBjebJhI%253D.jpg',
-    price: 5000,
-    name: '헤이즐넛라떼',
-  },
-  {
-    id: 4,
-    image:
-      'https://search.pstatic.net/common/?autoRotate=true&quality=95&src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20220107_51%2F1641531834988OryKU_JPEG%2FzaTR4pTcw-WggRb0_0Rzf9lhreJ7x1GMFfFQJmVdN2bMdMuYoGe5UyxiYHWORZj-lt2w_UE6LQZFClud.jpg',
-    price: 5000,
-    name: '카라멜마끼야또',
-  },
-  {
-    id: 5,
-    image:
-      'https://search.pstatic.net/common/?autoRotate=true&quality=95&src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20220111_222%2F1641862115504ISTKj_JPEG%2Fs_kgz0oFMm09-TVkeyoTR0wbK57Nr7Wlmt5VCRzX9NE%253D.jpg',
-    price: 5500,
-    name: '유기농 아이스크림',
-  },
-  {
-    id: 6,
-    image:
-      'https://search.pstatic.net/common/?autoRotate=true&quality=95&src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20220111_207%2F16418624654009Bsa3_JPEG%2FXFEBWQvN8HHch2-cq8al6nCjEpGjApyetdLniwKFOXQ%253D.jpg',
-    price: 6500,
-    name: '구름아이스커피',
-  },
-  {
-    id: 7,
-    image:
-      'https://search.pstatic.net/common/?autoRotate=true&quality=95&src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20220111_6%2F1641862551851otCEo_JPEG%2F32QYKg91laXuRLC2bJ2X6_4QhFKHfbkJMZlRyv6jQrE%253D.jpg',
-    price: 6500,
-    name: '에쏘 아포카토',
-  },
-  {
-    id: 8,
-    image:
-      'https://search.pstatic.net/common/?autoRotate=true&quality=95&src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20220111_213%2F1641862679060tkpfR_JPEG%2FW5fnIuQ3EJvrgJtMi_GHtt8KQXI5jaqyJZwxdppft2k%253D.jpg',
-    price: 6500,
-    name: '헤즐넛 아포카토',
-  },
-  {
-    id: 9,
-    image:
-      'https://search.pstatic.net/common/?autoRotate=true&quality=95&src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20220111_251%2F1641863055452Omjft_JPEG%2FSiaOXReEMeyZdRDTuuAIRJrEFTgE_IcEIe5UQMxcGMg%253D.jpg',
-    price: 6500,
-    name: '더치 아포카토',
-  },
-  {
-    id: 10,
-    image:
-      'https://search.pstatic.net/common/?autoRotate=true&quality=95&src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20220111_238%2F1641863696858txN4A_JPEG%2Fr7EtBSGsm0MR7CniYno7TDBNOKSNw4TFylzbZ2eSqzY%253D.jpg',
-    price: 4000,
-    name: '복숭아아이스티',
-  },
-  {
-    id: 11,
-    image:
-      'https://search.pstatic.net/common/?autoRotate=true&quality=95&src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20220111_77%2F1641863712954sBIxP_JPEG%2FOWoEyTVPvBs-N48hwCsRZpKRfTFulydkPBy0nPUpy_E%253D.jpg',
-    price: 4000,
-    name: '페퍼민트',
-  },
-  {
-    id: 12,
-    image:
-      'https://search.pstatic.net/common/?autoRotate=true&quality=95&src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20220111_82%2F1641863793777q1ITX_JPEG%2FeK1b5bcTsjc4YHIsV8TyFVJ_ZK9CeVooR4nxljSBvTg%253D.jpg',
-    price: 4000,
-    name: '캐모마일',
-  },
-  {
-    id: 13,
-    image:
-      'https://search.pstatic.net/common/?autoRotate=true&quality=95&src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20220111_232%2F1641863793780bSxST_JPEG%2F2rI3tvYMTIjcO8a_yEEQlR9Pf___QIqm2-CBK8ZCDWw%253D.jpg',
-    price: 4000,
-    name: '루이보스',
-  },
-  {
-    id: 14,
-    image:
-      'https://search.pstatic.net/common/?autoRotate=true&quality=95&src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20220111_47%2F1641881523309g4rIP_JPEG%2FbyqMoFgyiCxWK4afED63F4SmTyabVAudKbYgo61BkDs%253D.jpg',
-    price: 3500,
-    name: '초코쿠키',
-  },
-  {
-    id: 15,
-    image:
-      'https://search.pstatic.net/common/?autoRotate=true&quality=95&src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20220111_195%2F1641881609413mi7ta_JPEG%2FdTXpn4A3IKRw2rwW7gDaNTKAQRyPljFizqC9LAjzJPw%253D.jpg',
-    price: 3500,
-    name: '치즈쿠키',
-  },
-  {
-    id: 16,
-    image:
-      'https://search.pstatic.net/common/?autoRotate=true&quality=95&src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20220111_258%2F1641881740270RRwr9_JPEG%2Fuqg7jW9bu_Smq8OOxjF0-LWS5aXQQAf6QDvcTUh8eJo%253D.jpg',
-    price: 3500,
-    name: '촉촉쿠키',
-  },
-];
+import { getMenus } from '../../apis/store';
+import { useRecoilValue } from 'recoil';
+import { storeState } from '../../store/atoms';
 
 const Item = styled(Card)({
   userSelect: 'none',
@@ -149,6 +30,8 @@ const Item = styled(Card)({
 });
 
 function Main() {
+  const store = useRecoilValue(storeState);
+  const [menus, setMenus] = useState<IMenu[]>([]);
   const [count, setCount] = useState<number[]>([]);
   const [selectMenuList, setSelectMenuList] = useState<IMenu[]>([]);
   const handleAddMenu = (menu: IMenu) => {
@@ -184,6 +67,16 @@ function Main() {
     return result;
   };
   const totalPrice = getTotalPrice();
+
+  useEffect(() => {
+    const loadData = async () => {
+      if (!store) return;
+      const menuData = await getMenus(store.id);
+      if (!menuData) return;
+      setMenus(menuData);
+    };
+    loadData();
+  }, []);
 
   return (
     <Box sx={{ display: 'flex', gap: 2, height: 1 }}>

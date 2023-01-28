@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { IStore } from '../types';
+import { IMenu, IStore } from '../types';
 
 export const getStore = async (id: string) => {
   const reponse = await axios
@@ -9,4 +9,14 @@ export const getStore = async (id: string) => {
     });
 
   return reponse?.data as IStore | null;
+};
+
+export const getMenus = async (id: number) => {
+  const reponse = await axios
+    .get(`${process.env.REACT_APP_SERVER_URL}/menu/${id}`)
+    .catch((error) => {
+      return null;
+    });
+
+  return reponse?.data ?? [];
 };

@@ -15,7 +15,9 @@ import {
 import { useSnackbar } from 'notistack';
 import { useEffect, useState } from 'react';
 import uuid from 'react-uuid';
+import { useRecoilValue } from 'recoil';
 import { getUserByContact, payment } from '../../apis/pay';
+import { storeState } from '../../store/atoms';
 import { IUser } from '../../types';
 
 declare global {
@@ -58,11 +60,8 @@ interface IOrderModal {
   price: number;
 }
 
-const store = {
-  name: '그린커피',
-};
-
 export default function OrderModal({ price }: IOrderModal) {
+  const store = useRecoilValue(storeState);
   const [currentPrice, setCurrentPrice] = useState(0);
   const [userPoint, setUserPoint] = useState(0);
   const [usePoint, setUsePoint] = useState(0);
@@ -75,6 +74,7 @@ export default function OrderModal({ price }: IOrderModal) {
   const handleClose = () => setOpen(false);
 
   const onClickPay = () => {
+    if (!store) return;
     IMP.request_pay(
       {
         pg: 'kakaopay',
@@ -93,7 +93,7 @@ export default function OrderModal({ price }: IOrderModal) {
           if (user) {
             payment({
               customerId: user.id,
-              storeId: 1,
+              storeId: store.id,
               cost: price,
               savedPoint: point,
               usedPoint: usePoint,
