@@ -18,7 +18,7 @@ import uuid from 'react-uuid';
 import { useRecoilValue } from 'recoil';
 import { getUserByContact, payment } from '../../apis/pay';
 import { storeState } from '../../store/atoms';
-import { IUser } from '../../types';
+import { IPoint, IUser } from '../../types';
 
 declare global {
   interface Window {
@@ -59,9 +59,10 @@ const Card = styled(Box)(({ theme }) => ({
 interface IOrderModal {
   price: number;
   reset: () => void;
+  pointList: IPoint[];
 }
 
-export default function OrderModal({ price, reset }: IOrderModal) {
+export default function OrderModal({ price, reset, pointList }: IOrderModal) {
   const store = useRecoilValue(storeState);
   const [currentPrice, setCurrentPrice] = useState(0);
   const [userPoint, setUserPoint] = useState(0);
@@ -254,16 +255,24 @@ export default function OrderModal({ price, reset }: IOrderModal) {
               <Typography variant="h6" gutterBottom>
                 온라인 결제
               </Typography>
-              <FormControl disabled={!user}>
+              <FormControl disabled={!user} sx={{ height: 200, overflow: 'auto', px: 1 }}>
                 <FormLabel>적립할 포인트</FormLabel>
                 <RadioGroup row value={point} onChange={onChangePoint}>
-                  <FormControlLabel value={10} control={<Radio />} label={10} />
-                  <FormControlLabel value={20} control={<Radio />} label={20} />
-                  <FormControlLabel value={50} control={<Radio />} label={50} />
+                  {store &&
+                    pointList
+                      .filter((item) => item.storeId === store.id)
+                      .map((point) => (
+                        <FormControlLabel
+                          key={point.id}
+                          value={point.weight}
+                          control={<Radio />}
+                          label={point.name}
+                        />
+                      ))}
                   <FormControlLabel value={0} control={<Radio />} label="없음" />
                 </RadioGroup>
               </FormControl>
-              <Box sx={{ display: 'flex', justifyContent: 'center', mt: 5 }}>
+              <Box sx={{ display: 'flex', justifyContent: 'center' }}>
                 {currentPrice ? (
                   <Button variant="contained" onClick={onClickPay}>
                     {currentPrice.toLocaleString('ko-KR')}원 결제

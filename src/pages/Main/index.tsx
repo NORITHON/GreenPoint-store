@@ -13,11 +13,11 @@ import {
   Typography,
 } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { IMenu } from '../../types';
+import { IMenu, IPoint } from '../../types';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import DeleteIcon from '@mui/icons-material/Delete';
 import OrderModal from './OrderModal';
-import { getMenus } from '../../apis/store';
+import { getMenus, getPointList } from '../../apis/store';
 import { useRecoilValue } from 'recoil';
 import { storeState } from '../../store/atoms';
 
@@ -33,6 +33,7 @@ function Main() {
   const store = useRecoilValue(storeState);
   const [menus, setMenus] = useState<IMenu[]>([]);
   const [count, setCount] = useState<number[]>([]);
+  const [pointList, setPointList] = useState<IPoint[]>([]);
   const [selectMenuList, setSelectMenuList] = useState<IMenu[]>([]);
   const handleAddMenu = (menu: IMenu) => {
     let flag = false;
@@ -72,8 +73,11 @@ function Main() {
     const loadData = async () => {
       if (!store) return;
       const menuData = await getMenus(store.id);
+      const pointListData = await getPointList(store.id);
       if (!menuData) return;
       setMenus(menuData);
+      if (!pointListData) return;
+      setPointList(pointListData);
     };
     loadData();
   }, []);
@@ -141,7 +145,7 @@ function Main() {
               <span>총:</span>
               <span>{totalPrice.toLocaleString('ko-KR')}원</span>
             </Typography>
-            <OrderModal price={totalPrice} reset={handleClickReset} />
+            <OrderModal price={totalPrice} reset={handleClickReset} pointList={pointList} />
           </Box>
         </Card>
       </Box>

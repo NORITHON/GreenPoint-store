@@ -20,3 +20,13 @@ export const getMenus = async (id: number) => {
 
   return reponse?.data ?? [];
 };
+
+export const getPointList = async (id: number) => {
+  const reponse = await axios
+    .get(`${process.env.REACT_APP_SERVER_URL}/point/${id}`)
+    .catch((error) => {
+      return null;
+    });
+
+  return reponse?.data ?? [];
+};

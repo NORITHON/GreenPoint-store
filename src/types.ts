@@ -35,3 +35,10 @@ export interface IStore {
   longitude: number;
   totalPoint: number;
 }
+
+export interface IPoint {
+  id: number;
+  name: string;
+  weight: number;
+  storeId: number;
+}
