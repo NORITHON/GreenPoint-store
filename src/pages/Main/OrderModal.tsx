@@ -149,7 +149,7 @@ export default function OrderModal({ price, reset }: IOrderModal) {
     setUsePoint(+event.currentTarget.value);
   };
   const onClickUseAllPoint = () => {
-    setUsePoint(price);
+    setUsePoint(userPoint);
   };
   const onChangePoint = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPoint(+event.currentTarget.value);
@@ -243,7 +243,7 @@ export default function OrderModal({ price, reset }: IOrderModal) {
                   size="small"
                   variant="contained"
                   color="error"
-                  disabled={userPoint < currentPrice}
+                  disabled={userPoint < 1}
                   onClick={onClickUseAllPoint}
                 >
                   전액 사용
