@@ -266,7 +266,7 @@ export default function OrderModal({ price, reset, pointList }: IOrderModal) {
                           key={point.id}
                           value={point.weight}
                           control={<Radio />}
-                          label={point.name}
+                          label={`${point.name} (${point.weight})`}
                         />
                       ))}
                   <FormControlLabel value={0} control={<Radio />} label="없음" />
