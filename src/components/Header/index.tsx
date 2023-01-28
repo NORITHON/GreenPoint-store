@@ -96,6 +96,7 @@ function Header() {
                 <MenuItem
                   onClick={() => {
                     if (window.confirm('로그아웃 하시겠습니까?')) {
+                      localStorage.removeItem('storeId');
                       setStore(null);
                     }
                     handleCloseUserMenu();

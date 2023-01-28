@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { IMenu, IStore } from '../types';
+import { IStore } from '../types';
 
 export const getStore = async (id: string) => {
   const reponse = await axios

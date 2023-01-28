@@ -141,7 +141,7 @@ function Main() {
               <span>총:</span>
               <span>{totalPrice.toLocaleString('ko-KR')}원</span>
             </Typography>
-            <OrderModal price={totalPrice} />
+            <OrderModal price={totalPrice} reset={handleClickReset} />
           </Box>
         </Card>
       </Box>

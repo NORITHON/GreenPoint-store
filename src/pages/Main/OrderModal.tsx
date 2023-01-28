@@ -58,9 +58,10 @@ const Card = styled(Box)(({ theme }) => ({
 
 interface IOrderModal {
   price: number;
+  reset: () => void;
 }
 
-export default function OrderModal({ price }: IOrderModal) {
+export default function OrderModal({ price, reset }: IOrderModal) {
   const store = useRecoilValue(storeState);
   const [currentPrice, setCurrentPrice] = useState(0);
   const [userPoint, setUserPoint] = useState(0);
@@ -126,6 +127,7 @@ export default function OrderModal({ price }: IOrderModal) {
       }).then(() => {
         handleClose();
         enqueueSnackbar('결제가 완료되었습니다.', { variant: 'success' });
+        reset();
       });
     }
   };

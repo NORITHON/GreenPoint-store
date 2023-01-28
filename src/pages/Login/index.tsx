@@ -29,6 +29,7 @@ function Login() {
     const storeData = await getStore(data.id);
     if (storeData) {
       setStore(storeData);
+      localStorage.setItem('storeId', storeData.id + '');
     } else {
       setError('id', { message: '없는 가게 아이디입니다.' });
     }
