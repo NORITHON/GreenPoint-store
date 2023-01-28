@@ -27,7 +27,6 @@ function App() {
   return (
     <ThemeProvider>
       <SnackbarProvider maxSnack={3}>
-        <Router />
         {init ? (
           <Router />
         ) : (

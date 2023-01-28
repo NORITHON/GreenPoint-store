@@ -106,6 +106,7 @@ export default function OrderModal({ price, reset }: IOrderModal) {
             handleClose();
             enqueueSnackbar('결제가 완료되었습니다.', { variant: 'success' });
           }
+          reset();
         } else {
           var msg = '결제에 실패하였습니다.';
           msg += '\n사유 : ' + response.error_msg;

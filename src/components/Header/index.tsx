@@ -85,14 +85,15 @@ function Header() {
                   <Typography textAlign="center">{store.name} 사장님, 반갑습니다 👋</Typography>
                 </MenuItem>
                 <Divider />
-                <MenuItem
+                {/* <MenuItem
                   onClick={() => {
                     navigate('/menu');
                     handleCloseUserMenu();
                   }}
                 >
                   <Typography textAlign="center">메뉴 관리</Typography>
-                </MenuItem>
+                </MenuItem> */}
+                {/* TODO:: 메뉴 관리 기능 추가 */}
                 <MenuItem
                   onClick={() => {
                     if (window.confirm('로그아웃 하시겠습니까?')) {
