@@ -254,7 +254,7 @@ export default function OrderModal({ price, reset }: IOrderModal) {
               <Typography variant="h6" gutterBottom>
                 온라인 결제
               </Typography>
-              <FormControl>
+              <FormControl disabled={!user}>
                 <FormLabel>적립할 포인트</FormLabel>
                 <RadioGroup row value={point} onChange={onChangePoint}>
                   <FormControlLabel value={10} control={<Radio />} label={10} />
